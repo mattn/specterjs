@@ -294,26 +294,31 @@ int main(int argc, char* argv[]) {
   JSObjectSetProperty(ctx, global, jstr, jsobj_specter,
           kJSPropertyAttributeReadOnly | kJSPropertyAttributeDontDelete, NULL);
   JSStringRelease(jstr);
+  JSValueProtect(ctx, jsobj_specter);
 
   jstr = JSStringCreateWithUTF8CString("open");
   jsfunc_specter_open = JSObjectMakeFunctionWithCallback(
           ctx, jstr, specter_open);
   JSStringRelease(jstr);
+  JSValueProtect(ctx, jsfunc_specter_open);
 
   jstr = JSStringCreateWithUTF8CString("exit");
   jsfunc_specter_exit = JSObjectMakeFunctionWithCallback(
           ctx, jstr, specter_exit);
   JSStringRelease(jstr);
+  JSValueProtect(ctx, jsfunc_specter_exit);
 
   jstr = JSStringCreateWithUTF8CString("render");
   jsfunc_specter_render = JSObjectMakeFunctionWithCallback(
           ctx, jstr, specter_render);
   JSStringRelease(jstr);
+  JSValueProtect(ctx, jsfunc_specter_render);
 
   jstr = JSStringCreateWithUTF8CString("sleep");
   jsfunc_specter_sleep = JSObjectMakeFunctionWithCallback(
           ctx, jstr, specter_sleep);
   JSStringRelease(jstr);
+  JSValueProtect(ctx, jsfunc_specter_sleep);
 
   JSValueRef argValue[argc];
   int n;
@@ -322,6 +327,7 @@ int main(int argc, char* argv[]) {
     argValue[n] = JSValueMakeString(ctx, jstr);
   }
   jsobj_args = JSObjectMakeArray(ctx, argc, argValue, NULL);
+  JSValueProtect(ctx, jsobj_args);
 
   g_signal_connect(G_OBJECT(wv), "window-object-cleared",
           G_CALLBACK(window_object_cleared), NULL);
