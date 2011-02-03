@@ -1,0 +1,10 @@
+all : specterjs.exe
+
+specterjs.exe : specterjs.o
+	gcc -o specterjs.exe specterjs.o `pkg-config --libs webkit-1.0`
+
+specterjs.o : specterjs.c
+	gcc -Wall -c -o specterjs.o specterjs.c `pkg-config --cflags webkit-1.0`
+
+clean :
+	-rm specterjs.exe specterjs.o
