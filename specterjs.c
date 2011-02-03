@@ -255,7 +255,9 @@ load_finished(WebKitWebView* wv, WebKitWebFrame* wf, gpointer user_data) {
 static gboolean
 console_message(WebKitWebView* wv, gchar *message, gint line,
         gchar *source_id, gpointer user_data) {
-  fprintf(stdout, "%s\n", message);
+  gchar* str = g_locale_from_utf8(message, -1, NULL, NULL, NULL);
+  fprintf(stdout, "%s\n", str);
+  g_free(str);
   return TRUE;
 }
 
