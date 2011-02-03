@@ -385,7 +385,7 @@ int main(int argc, char* argv[]) {
   if (error) {
     fprintf(stderr, "%s\n", error->message);
   } else {
-    webkit_web_view_execute_script(wv, script);
+    webkit_web_view_load_string(wv, "<html><body></body></html>", "text/html", "utf-8", NULL);
     gtk_main();
     g_free(script);
   }
