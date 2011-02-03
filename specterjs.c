@@ -281,13 +281,25 @@ int main(int argc, char* argv[]) {
   JSGlobalContextRef ctx = webkit_web_frame_get_global_context(wf);
   JSObjectRef global = JSContextGetGlobalObject(ctx);
 
-  JSClassDefinition classDefinition = kJSClassDefinitionEmpty;
-  classDefinition.attributes = kJSClassAttributeNone ;
-  classDefinition.className = "SpecterJS";
-  classDefinition.hasProperty = specter_hasProperty;
-  classDefinition.getProperty = specter_getProperty;
-  classDefinition.setProperty = specter_setProperty;
-  classDefinition.getPropertyNames = specter_getPropertyNames;
+  JSClassDefinition classDefinition = {
+      0, // version
+	  kJSClassAttributeNone, // attributes
+      "SpecterJS", // className
+      NULL, // parentClass
+      NULL, // staticValues
+      NULL, // staticFunctions
+      NULL, // initialize
+      NULL, // finalize
+      specter_hasProperty, // hasProperty
+      specter_getProperty, // getProperty
+      specter_setProperty, // setProperty
+      NULL, // deleteProperty
+      specter_getPropertyNames, // getPropertyNames
+      NULL, // callAsFunction
+      NULL, // callAsConstructor
+      NULL, // hasInstance
+      NULL // convertToType
+  };
   JSClassRef classSubstance = JSClassCreate(&classDefinition);
   jsobj_specter = JSObjectMake(ctx, classSubstance, NULL);
   JSStringRef jstr = JSStringCreateWithUTF8CString("specter");
@@ -392,4 +404,4 @@ int main(int argc, char* argv[]) {
    render
 */
 
-// vim:set et ts=4
+// vim:set et ts=4:
