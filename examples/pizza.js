@@ -4,9 +4,7 @@ if (specter.state.length === 0) {
     specter.state = 'ピザ';
     specter.open('http://www.google.com/m/local?site=local&q=pizza+in+osaka');
 } else {
-    var list = document.querySelectorAll('div.bf');
-    for (var i in list) {
-        console.log(list[i].innerText);
-    }
+    [].forEach.call(document.querySelectorAll('div.bf'),
+        function(n) { console.log(n.innerText); });
     specter.exit();
 }
